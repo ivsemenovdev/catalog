@@ -1,3 +1,7 @@
+html {
+    overflow-y: scroll;
+}
+
 header .wrapper,
 main .wrapper,
 footer .wrapper
@@ -21,6 +25,12 @@ footer .wrapper
     align-items: center;
 }
 
+ul,
+li {
+    list-style: none;
+    cursor: pointer;
+}
+
 /* Стили для "аккордиона"*/
 
 .accordion {
@@ -33,4 +43,9 @@ footer .wrapper
     display: none;
     background-color: white;
     overflow: hidden;
+}
+
+.active .material-symbols-outlined {
+    rotate: 180deg;
+    transition: 0.5s;
 }
