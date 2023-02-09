@@ -20,3 +20,17 @@ footer .wrapper
     display: flex;
     align-items: center;
 }
+
+/* Стили для "аккордиона"*/
+
+.accordion {
+    cursor: pointer;
+    border: none;
+    text-align: left;
+}
+
+.panel {
+    display: none;
+    background-color: white;
+    overflow: hidden;
+}

@@ -8,8 +8,6 @@ async function getData() {
     }
 }
 
-getData().then( data => renderTree(data) )
-
 const mainNode = document.getElementById('main-container');
 const menu = document.createElement('div');
 
@@ -17,6 +15,8 @@ menu.setAttribute("id", "main-menu");
 mainNode.appendChild(menu);
 
 const node = document.getElementById('main-menu');
+
+// Построение дерево каталога
 
 function buildTree(children) {
 
@@ -46,6 +46,64 @@ function buildTree(children) {
 function renderTree(data) {
     node.appendChild(buildTree(data));
 }
+
+// ----------
+
+getData().then( data => {
+
+    renderTree(data);
+
+    // "Простой аккордион"
+
+    let ulNode = document.querySelector('ul');
+    let liNodes = document.querySelectorAll('li');
+
+    ulNode.classList.add('main-ul');
+
+    let ulNodes = document.querySelectorAll('ul');
+
+    for (let i = 0; i < ulNodes.length; i++) {
+
+        if (!ulNodes[i].classList.contains("main-ul")) {
+            ulNodes[i].classList.add('panel');
+        }
+
+    }
+
+    for (let i = 0; i < liNodes.length; i++) {
+
+        parent = liNodes[i].parentNode;
+
+        if (liNodes[i].dataset) {
+            liNodes[i].classList.add('main-li', 'accordion');
+        }
+
+    }
+
+    let el2 = document.getElementById('main-container')
+
+    el2.addEventListener('click', (event) => {
+
+        if (!event.target.dataset.file) {
+
+            event.target.classList.contains("active") ? event.target.classList.remove("active") : event.target.classList.add("active");
+
+            let panel = event.target.parentNode.lastChild;
+
+            if (event.target.classList.contains('menu-element')) {
+
+                if (panel.style.display === "block") {
+                    panel.style.display = "none";
+                } else {
+                    panel.style.display = "block";
+                }
+            }
+        }
+    });
+
+
+} )
+
 
 
 
