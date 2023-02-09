@@ -28,13 +28,14 @@ function buildTree(children) {
         let li = document.createElement("li");
 
         branch.type === 'file' ?
-            li.innerHTML = `${branch.name}` :
-            li.innerHTML = `<div class="menu-element">${branch.name}<span class="material-symbols-outlined">expand_more</span></div>`;
+            li.innerHTML = `${branch.name.replace(/_/g, ' ')}` :
+            li.innerHTML = `<div class="menu-element">${branch.name.replace('_', ' - ')}<span class="material-symbols-outlined">expand_more</span></div>`;
 
         if (branch.children) {
             li.appendChild(buildTree(branch.children));
         } else if (branch.type === 'file') {
             li.setAttribute('data-file', `${branch.path}`);
+            li.setAttribute('class', `file`);
         }
 
         ul.appendChild(li);
@@ -101,9 +102,24 @@ getData().then( data => {
         }
     });
 
-
 } )
 
+// Вывод pdf
+
+let el = document.getElementById('main-container')
+
+el.addEventListener('click', showPdf);
+
+function newSite(file) {
+    document.getElementById('pdf-js-viewer').src = `scripts/pdfjs-dist/web/viewer.html?file=data/${file}`;
+}
+
+function showPdf(event) {
+
+    if (event.target.dataset.file) {
+        newSite(event.target.dataset.file);
+    }
+}
 
 
 

@@ -11,13 +11,14 @@ footer .wrapper
     margin: 0 auto;
 }
 
-#main-container {
+#main-menu {
     width: 100%;
+    word-break: break-all;
 }
 
-#main-menu {
-    max-width: 30%;
-    word-break: break-all;
+#pdf-js-viewer {
+    max-width: 70%;
+    height: 100vw;
 }
 
 .menu-element {
@@ -48,4 +49,17 @@ li {
 .active .material-symbols-outlined {
     rotate: 180deg;
     transition: 0.5s;
+}
+
+.file {
+    margin-top: 5px;
+}
+
+.menu-element:hover,
+.file:hover {
+    color: blue;
+}
+
+.main-li .active {
+    background: aliceblue;
 }
