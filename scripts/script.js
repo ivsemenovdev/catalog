@@ -29,7 +29,7 @@ function buildTree(children) {
 
         branch.type === 'file' ?
             li.innerHTML = `${branch.name}` :
-            li.innerHTML = `<div>${branch.name}`;
+            li.innerHTML = `<div class="menu-element">${branch.name}<span class="material-symbols-outlined">expand_more</span></div>`;
 
         if (branch.children) {
             li.appendChild(buildTree(branch.children));
