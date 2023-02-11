@@ -1,11 +1,13 @@
 async function getData() {
 
     try {
-        const response = await fetch('data/catalog.json');
-        return await response.json();
+        let response = fetch("http://localhost:3000/api/v1/partnercatalog");
+        await response;
+        return response.then(data => data.json());
     } catch (err) {
         alert(err);
     }
+
 }
 
 const mainNode = document.getElementById('main-container');
@@ -16,7 +18,7 @@ mainNode.appendChild(menu);
 
 const node = document.getElementById('main-menu');
 
-// Построение дерево каталога
+// Построение дерева каталога
 
 function buildTree(children) {
 
@@ -27,14 +29,14 @@ function buildTree(children) {
         let branch = children[i];
         let li = document.createElement("li");
 
-        branch.type === 'file' ?
-            li.innerHTML = `${branch.name.replace(/_/g, ' ')}` :
-            li.innerHTML = `<div class="menu-element">${branch.name.replace('_', ' - ')}<span class="material-symbols-outlined">expand_more</span></div>`;
+        children[i].urlPdf !== '' ?
+            li.innerHTML = `${(children[i].urlPdf.replace('/images/pdf/', ''))}` :
+            li.innerHTML = `<div class="menu-element">${children[i].label}<span class="material-symbols-outlined">expand_more</span></div>`;
 
-        if (branch.children) {
+        if (branch.children.length > 0) {
             li.appendChild(buildTree(branch.children));
-        } else if (branch.type === 'file') {
-            li.setAttribute('data-file', `${branch.path}`);
+        } else if (children[i].urlPdf !== '') {
+            li.setAttribute('data-file', `${children[i].urlPdf}`);
             li.setAttribute('class', `file`);
         }
 
@@ -50,7 +52,9 @@ function renderTree(data) {
 
 // ----------
 
-getData().then( data => {
+getData().then(data => {
+
+    console.log(data);
 
     renderTree(data);
 
@@ -102,7 +106,7 @@ getData().then( data => {
         }
     });
 
-} )
+})
 
 // Вывод pdf
 

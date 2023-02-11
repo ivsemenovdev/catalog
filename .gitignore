@@ -3,3 +3,4 @@
 /.idea/modules.xml
 /.idea/vcs.xml
 /scripts/pdfjs-dist/web/data/
+/node_modules/

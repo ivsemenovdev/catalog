@@ -11,9 +11,16 @@ footer .wrapper
     margin: 0 auto;
 }
 
+
+
 #main-menu {
     width: 100%;
     word-break: break-all;
+}
+
+#main-container {
+    width: 30%;
+    padding-right: 10px;
 }
 
 #pdf-js-viewer {
@@ -30,6 +37,10 @@ ul,
 li {
     list-style: none;
     cursor: pointer;
+}
+
+ul.main-ul {
+    padding-left: 0;
 }
 
 /* Стили для "аккордиона"*/
@@ -60,6 +71,3 @@ li {
     color: blue;
 }
 
-.main-li .active {
-    background: aliceblue;
-}
