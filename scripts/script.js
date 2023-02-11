@@ -1,5 +1,4 @@
 async function getData() {
-
     try {
         let response = fetch("http://localhost:3000/api/v1/partnercatalog");
         await response;
@@ -7,7 +6,6 @@ async function getData() {
     } catch (err) {
         alert(err);
     }
-
 }
 
 const mainNode = document.getElementById('main-container');
@@ -20,11 +18,22 @@ const node = document.getElementById('main-menu');
 
 // Построение дерева каталога
 
+let pathLvl1 = ''
+let pathLvl2 = ''
+
 function buildTree(children) {
 
     let ul = document.createElement("ul");
 
     for (let i = 0, n = children.length; i < n; i++) {
+
+        if (children[i].urlPdf === '' && children[i].key.includes(`${'lvl1_' + children[i].label}`)) {
+            pathLvl1 = children[i].label;
+        }
+
+        if (children[i].urlPdf === '' && children[i].key.includes(`${'lvl2_' + children[i].label}`)) {
+            pathLvl2 = children[i].label;
+        }
 
         let branch = children[i];
         let li = document.createElement("li");
@@ -36,13 +45,14 @@ function buildTree(children) {
         if (branch.children.length > 0) {
             li.appendChild(buildTree(branch.children));
         } else if (children[i].urlPdf !== '') {
-            li.setAttribute('data-file', `${children[i].urlPdf}`);
+            li.setAttribute('data-file', `${pathLvl1 + '/' + pathLvl2 + '/' + children[i].urlPdf.replace('/images/pdf/', '')}`);
             li.setAttribute('class', `file`);
         }
 
         ul.appendChild(li);
 
     }
+
     return ul;
 }
 
@@ -53,8 +63,6 @@ function renderTree(data) {
 // ----------
 
 getData().then(data => {
-
-    console.log(data);
 
     renderTree(data);
 
@@ -115,7 +123,8 @@ let el = document.getElementById('main-container')
 el.addEventListener('click', showPdf);
 
 function newSite(file) {
-    document.getElementById('pdf-js-viewer').src = `scripts/pdfjs-dist/web/viewer.html?file=data/${file}`;
+    console.log(file)
+    document.getElementById('pdf-js-viewer').src = `scripts/pdfjs-dist/web/viewer.html?file=data/${file.includes('#') ? file : file + '#page=0'}`;
 }
 
 function showPdf(event) {
