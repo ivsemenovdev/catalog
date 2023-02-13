@@ -8,10 +8,11 @@ const app = express();
 
 app.use(cors());
 
+// Раскоментировать для загрузки json файла с сервера
 const res = await fetch('http://pneumoindutech.ru/api/v1/partnercatalog');
 const data = await res.json();
 
-let separateReqPool = {maxSockets: 20};
+let separateReqPool = {maxSockets: 100};
 
 app.get("/api/v1/partnercatalog", (request, response, next) => {
     response.send(data);
@@ -27,13 +28,14 @@ app.get("/api/v1/partnercatalog", (request, response, next) => {
 
             if (branch.urlPdf === '' && branch.key === `lvl1_${branch.label}`) {
                 parent = branch.label;
-                fs.mkdir(`/Work/SMC/Catalog/scripts/pdfjs-dist/web/data/${branch.label}`, {recursive: true}, (err) => {
+                path = `/Work/SMC/Catalog/scripts/pdfjs-dist/web/data/${branch.label}`;
+                fs.mkdir(path, {recursive: true}, (err) => {
                     if (err) throw err;
                 });
             } else if ((branch.urlPdf === '' && branch.key === `lvl2_${branch.label}`)) {
                 let name = branch.label.replace(/[/]/g, '-');
                 path = `/Work/SMC/Catalog/scripts/pdfjs-dist/web/data/${parent}/${name}`;
-                fs.mkdir(`/Work/SMC/Catalog/scripts/pdfjs-dist/web/data/${parent}/${name}`, {recursive: true}, (err) => {
+                fs.mkdir(path, {recursive: true}, (err) => {
                     if (err) throw err;
                 });
             } else {
@@ -42,7 +44,6 @@ app.get("/api/v1/partnercatalog", (request, response, next) => {
                 const encodedURI = encodeURI(URI);
 
                 // Раскоментировать для загрузки pdf файлов
-
                 // downloadPDF(`${encodedURI}`, `${path + '/' + fileName}`);
             }
 
