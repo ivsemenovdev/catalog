@@ -34,13 +34,13 @@ app.get("/api/v1/partnercatalog", (request, response, next) => {
                 });
             } else if ((branch.urlPdf === '' && branch.key === `lvl2_${branch.label}`)) {
                 let name = branch.label.replace(/[/]/g, '-');
-                path = `/Work/SMC/Catalog/scripts/pdfjs-dist/web/data/${parent}/${name}`;
+                path = `/Work/Projects/Portfolio/catalog/scripts/pdfjs-dist/web/data/${parent}/${name}`;
                 fs.mkdir(path, {recursive: true}, (err) => {
                     if (err) throw err;
                 });
             } else {
                 let fileName = branch.urlPdf.toString().replace('/images/pdf/', '')
-                const URI = `${'http://pneumoindutech.ru/images/pdf/' + branch.urlPdf.toString().replace('/images/pdf/', '')}`;
+                const URI = `${'https://catalog.pneumoindutech.ru/images/pdf/' + branch.urlPdf.toString().replace('/images/pdf/', '')}`;
                 const encodedURI = encodeURI(URI);
 
                 // Раскоментировать для загрузки pdf файлов
