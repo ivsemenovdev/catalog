@@ -9,7 +9,7 @@ const app = express();
 app.use(cors());
 
 // Раскоментировать для загрузки json файла с сервера
-const res = await fetch('http://pneumoindutech.ru/api/v1/partnercatalog');
+const res = await fetch('https://catalog.pneumoindutech.ru/api/v1/partnercatalog');
 const data = await res.json();
 
 let separateReqPool = {maxSockets: 100};
@@ -28,7 +28,7 @@ app.get("/api/v1/partnercatalog", (request, response, next) => {
 
             if (branch.urlPdf === '' && branch.key === `lvl1_${branch.label}`) {
                 parent = branch.label;
-                path = `/Work/SMC/Catalog/scripts/pdfjs-dist/web/data/${branch.label}`;
+                path = `/Work/Projects/Portfolio/catalog/scripts/pdfjs-dist/web/data/${branch.label}`;
                 fs.mkdir(path, {recursive: true}, (err) => {
                     if (err) throw err;
                 });

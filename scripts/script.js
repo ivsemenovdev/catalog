@@ -1,7 +1,7 @@
 async function getData() {
     try {
-        // let response = fetch("http://localhost:3000/api/v1/partnercatalog");
-        let response = fetch("./server/localDB.json");
+        let response = fetch("http://localhost:3000/api/v1/partnercatalog");
+        // let response = fetch("./server/localDB.json");
         await response;
         return response.then(data => data.json());
     } catch (err) {
